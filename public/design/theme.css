@@ -1,0 +1,295 @@
+/* =============================================================
+   Bolão Innovate — Copa do Mundo
+   Tema: Brasil + dark mode + premium sports
+   ============================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap');
+
+:root {
+  /* ---------- PALETA BRASIL ---------- */
+  --br-green:        #009C3B;      /* verde bandeira */
+  --br-green-bright: #1FD66B;      /* verde luminoso pra interações dark */
+  --br-green-deep:   #006B28;      /* verde profundo pra gradientes */
+  --br-yellow:       #FEDF00;      /* amarelo bandeira */
+  --br-yellow-warm:  #FFC700;      /* amarelo levemente alaranjado */
+  --br-navy:         #002776;      /* azul marinho bandeira */
+  --br-navy-deep:    #001142;      /* navy profundo */
+
+  /* ---------- BACKGROUND STACK (dark mode profundo) ---------- */
+  --bg-base:    #050B1F;           /* fundo da página */
+  --bg-elev-0:  #0A1131;           /* card / panel base */
+  --bg-elev-1:  #0F1840;           /* card hover / nested panel */
+  --bg-elev-2:  #15205A;           /* highest elevation */
+  --bg-stripe:  #060D24;           /* zebra de tabela */
+
+  /* ---------- TEXTO ---------- */
+  --fg-primary:   #FFFFFF;
+  --fg-secondary: rgba(255,255,255,0.72);
+  --fg-muted:     rgba(255,255,255,0.48);
+  --fg-faint:     rgba(255,255,255,0.28);
+
+  /* ---------- BORDAS ---------- */
+  --border-soft:   rgba(255,255,255,0.06);
+  --border-medium: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.18);
+  --border-brand:  rgba(254,223,0,0.45);
+
+  /* ---------- ACENTOS / SEMÂNTICOS ---------- */
+  --gold:        #F2C94C;          /* prêmio / medalha ouro */
+  --silver:      #C8CDE4;          /* medalha prata */
+  --bronze:      #C77B3E;          /* medalha bronze */
+  --danger:      #FF4D6A;
+  --warn:        #FFC700;
+  --info:        #5BB4FF;
+
+  /* ---------- SOMBRAS ---------- */
+  --shadow-card:  0 2px 8px rgba(0,0,0,0.35), 0 0 0 1px var(--border-soft);
+  --shadow-elev:  0 18px 50px rgba(0,0,0,0.55), 0 1px 0 rgba(255,255,255,0.06) inset;
+  --shadow-glow-green:  0 14px 40px rgba(0,156,59,0.30), 0 0 0 1px rgba(31,214,107,0.18);
+  --shadow-glow-yellow: 0 14px 40px rgba(254,223,0,0.22), 0 0 0 1px rgba(254,223,0,0.25);
+
+  /* ---------- GRADIENTES ---------- */
+  --grad-green:   linear-gradient(180deg, #1FD66B 0%, #009C3B 55%, #006B28 100%);
+  --grad-green-flat: linear-gradient(180deg, #11C25F 0%, #008833 100%);
+  --grad-yellow:  linear-gradient(180deg, #FFE94B 0%, #FEDF00 50%, #E5C700 100%);
+  --grad-navy:    linear-gradient(180deg, #15205A 0%, #0A1131 100%);
+  --grad-hero:    radial-gradient(ellipse 90% 65% at 30% 0%, rgba(0,39,118,0.55) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 50% at 85% 30%, rgba(254,223,0,0.10) 0%, transparent 65%),
+                  linear-gradient(180deg, #0A1131 0%, #050B1F 100%);
+  --grad-gold-chip: linear-gradient(180deg, #FFE08A 0%, #F2C94C 55%, #C9981E 100%);
+
+  /* ---------- RADII ---------- */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+  --r-2xl: 28px;
+  --r-pill: 9999px;
+
+  /* ---------- TIPOGRAFIA ---------- */
+  --font-ui: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ---------- MOTION ---------- */
+  --dur-fast: 140ms;
+  --dur: 220ms;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+/* ============================================================
+   GRÃO + TEXTURA DE FUNDO (vibe Copa, sutil)
+   ============================================================ */
+.grain::before {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
+  opacity: .07;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+/* ============================================================
+   BASE RESET (escopo: dentro dos artboards)
+   ============================================================ */
+.app-root,
+.app-root * {
+  box-sizing: border-box;
+}
+.app-root {
+  font-family: var(--font-ui);
+  color: var(--fg-primary);
+  background: var(--bg-base);
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  font-feature-settings: 'cv11', 'ss01', 'ss03';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   PRIMITIVAS REUTILIZÁVEIS
+   ============================================================ */
+
+/* Botão primário verde — gradient premium */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: var(--r-pill);
+  font: 700 14.5px/1 var(--font-ui);
+  letter-spacing: .01em;
+  color: #fff;
+  background: var(--grad-green);
+  border: 1px solid rgba(31,214,107,0.55);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.25) inset,
+    0 -1px 0 rgba(0,0,0,0.25) inset,
+    0 8px 24px rgba(0,156,59,0.40);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.30) inset,
+    0 -1px 0 rgba(0,0,0,0.25) inset,
+    0 14px 36px rgba(0,156,59,0.55);
+}
+
+/* Botão amarelo / call-to-action premium (estilo prêmio) */
+.btn-gold {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: var(--r-pill);
+  font: 800 14.5px/1 var(--font-ui);
+  letter-spacing: .02em;
+  color: #1A0F00;
+  background: var(--grad-yellow);
+  border: 1px solid rgba(254,223,0,0.6);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.6) inset,
+    0 -1px 0 rgba(0,0,0,0.18) inset,
+    0 10px 30px rgba(254,223,0,0.30);
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.btn-gold:hover { transform: translateY(-1px); }
+
+/* Botão fantasma (outline branco) */
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: var(--r-pill);
+  font: 500 13.5px/1 var(--font-ui);
+  color: var(--fg-primary);
+  background: transparent;
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  transition: background var(--dur);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.06); }
+
+/* Card padrão */
+.card {
+  position: relative;
+  background: var(--bg-elev-0);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-card);
+}
+
+/* Pill / chip */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--r-pill);
+  font: 600 11px/1 var(--font-ui);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  border: 1px solid var(--border-medium);
+  color: var(--fg-secondary);
+  background: rgba(255,255,255,0.04);
+}
+.chip.green   { color: #62F49B; background: rgba(31,214,107,0.10); border-color: rgba(31,214,107,0.35); }
+.chip.yellow  { color: #FEDF00; background: rgba(254,223,0,0.10);  border-color: rgba(254,223,0,0.35); }
+.chip.gold    { color: #FFD96B; background: rgba(242,201,76,0.12); border-color: rgba(242,201,76,0.40); }
+.chip.red     { color: #FF7A8E; background: rgba(255,77,106,0.10); border-color: rgba(255,77,106,0.35); }
+.chip.navy    { color: #8EA9FF; background: rgba(0,39,118,0.45);   border-color: rgba(91,180,255,0.30); }
+
+/* Input padrão dark */
+.input {
+  display: block;
+  width: 100%;
+  height: 52px;
+  padding: 0 16px 0 48px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--r-md);
+  color: var(--fg-primary);
+  font: 500 15px/1 var(--font-ui);
+  outline: none;
+  transition: border-color var(--dur), background var(--dur);
+}
+.input::placeholder { color: var(--fg-muted); }
+.input:focus {
+  border-color: var(--br-yellow);
+  background: rgba(255,255,255,0.06);
+  box-shadow: 0 0 0 4px rgba(254,223,0,0.10);
+}
+
+/* Label (microcaption acima dos inputs) */
+.field-label {
+  display: block;
+  font: 600 11px/1 var(--font-ui);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin-bottom: 8px;
+}
+
+/* Material Symbols size shortcut */
+.material-symbols-outlined { font-variation-settings: 'opsz' 24, 'wght' 400, 'GRAD' 0, 'FILL' 0; }
+.ms-fill { font-variation-settings: 'FILL' 1, 'wght' 500; }
+
+/* ============================================================
+   COMPONENTE: BANDEIRA (CSS-only) — vibe stencil/estádio
+   ============================================================ */
+.flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.25);
+  flex-shrink: 0;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.45);
+  letter-spacing: .04em;
+}
+
+/* Tabela divisor */
+.tbl-row {
+  display: grid;
+  align-items: center;
+  border-bottom: 1px solid var(--border-soft);
+  transition: background var(--dur-fast);
+}
+.tbl-row:hover { background: rgba(255,255,255,0.03); }
+.tbl-row:last-child { border-bottom: none; }
+
+/* Stadium scoreboard number frame */
+.score-digit {
+  font-family: var(--font-ui);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--br-yellow);
+  text-shadow: 0 4px 0 rgba(0,0,0,0.4), 0 0 32px rgba(254,223,0,0.35);
+}
+
+/* Section divider — diagonal Brazil */
+.flag-stripe {
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--br-yellow), transparent);
+  opacity: .14;
+  height: 1px;
+  width: 100%;
+}
+
+/* Scroll thin */
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
