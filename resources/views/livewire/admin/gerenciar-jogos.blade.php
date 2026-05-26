@@ -7,6 +7,8 @@
         <h1 style="margin: 0; font: 800 28px/1.1 Inter; letter-spacing: -0.02em; color: #fff;">Gerenciar Jogos</h1>
     </div>
 
+    @include('livewire.admin._nav')
+
     <div class="card card-scroll" style="padding: 0; border-radius: var(--r-2xl); overflow: hidden;">
         <div class="tbl-row" style="grid-template-columns: 56px 1fr 160px 130px 110px 190px; padding: 12px 24px; background: rgba(255,255,255,0.02); font: 600 10.5px/1 Inter; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-muted); border-bottom: 1px solid var(--border-medium);">
             <div>#</div><div>Confronto</div><div>Data/Hora</div><div>Fase</div><div>Status</div><div style="text-align: right;">Ações</div>

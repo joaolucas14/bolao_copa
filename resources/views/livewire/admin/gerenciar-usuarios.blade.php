@@ -13,6 +13,8 @@
         </button>
     </div>
 
+    @include('livewire.admin._nav')
+
     {{-- ===================== FORM CRIAR USUÁRIO ===================== --}}
     @if($mostrarFormCriar)
     <div class="card" style="padding: 28px 32px; border-radius: var(--r-2xl); margin-bottom: 24px; border-color: rgba(31,214,107,0.25);">

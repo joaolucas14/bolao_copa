@@ -28,6 +28,7 @@ class Dashboard extends Component
                 ->whereNotNull('pontuacao')
                 ->with('usuario')
                 ->orderByDesc('pontuacao')
+                ->orderBy('created_at')
                 ->first();
         }
 
@@ -37,15 +38,28 @@ class Dashboard extends Component
             ->withCount(['palpites as ganhadores' => fn ($q) => $q->where('pts_ganhador', true)])
             ->withCount(['palpites as parciais' => fn ($q) => $q->where('pts_parcial', true)])
             ->orderByDesc('palpites_sum_pontuacao')
+            ->orderByDesc('exatos')
+            ->orderByDesc('ganhadores')
+            ->orderByDesc('parciais')
+            ->orderBy('nome')
             ->get();
 
         $premioValor     = Configuracao::obter('premio_valor', '0');
         $premioDescricao = Configuracao::obter('premio_descricao', 'A definir');
         $premioBonus     = Configuracao::obter('premio_bonus', '');
+        $bolaoEncerrado  = Configuracao::obter('bolao_encerrado', '0') === '1';
+        $vencedor        = $bolaoEncerrado ? $ranking->first() : null;
+
+        $meuPalpiteProximo = $proximoJogo
+            ? Palpite::where('jogo_id', $proximoJogo->id)
+                ->where('user_id', auth()->id())
+                ->first()
+            : null;
 
         return view('livewire.dashboard', compact(
             'proximoJogo', 'ultimoJogo', 'palpiteiroDaRodada', 'ranking',
-            'premioValor', 'premioDescricao', 'premioBonus',
+            'premioValor', 'premioDescricao', 'premioBonus', 'meuPalpiteProximo',
+            'bolaoEncerrado', 'vencedor',
         ));
     }
 }

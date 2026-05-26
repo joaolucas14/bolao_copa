@@ -44,6 +44,10 @@ class PalpiteService
             return [false, 'O jogo já iniciou. Palpites encerrados.'];
         }
 
+        if ($jogo->data_hora && now()->addHour()->greaterThanOrEqualTo($jogo->data_hora)) {
+            return [false, 'Palpites encerrados 1h antes do início do jogo.'];
+        }
+
         $jaApostou = Palpite::where('jogo_id', $jogo->id)
             ->where('user_id', $usuario->id)
             ->exists();

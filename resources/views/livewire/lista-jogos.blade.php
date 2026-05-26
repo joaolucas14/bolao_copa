@@ -30,11 +30,8 @@
                 {{-- Confronto --}}
                 <div style="flex: 1; display: flex; align-items: center; gap: 14px;">
                     <div style="display: flex; align-items: center; gap: 10px;">
-                        <svg width="40" height="28" viewBox="0 0 80 56" style="border-radius: 3px; flex-shrink: 0;">
-                            <rect width="80" height="56" fill="#009C3B"/>
-                            <path d="M40 6 L74 28 L40 50 L6 28 Z" fill="#FEDF00"/>
-                            <circle cx="40" cy="28" r="11" fill="#002776"/>
-                        </svg>
+                        <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                             style="width: 40px; height: 28px; border-radius: 3px; object-fit: contain; flex-shrink: 0;" />
                         <span style="font: 700 14px/1 Inter; color: #fff;">Brasil</span>
                     </div>
 
@@ -54,8 +51,17 @@
                 </div>
 
                 {{-- Status + CTA --}}
+                @php
+                    $jaApostou   = isset($jogosPalpitados[$jogo->id]);
+                    $prazoFechado = $jogo->data_hora && now()->addHour()->greaterThanOrEqualTo($jogo->data_hora);
+                @endphp
                 <div style="flex-shrink: 0; display: flex; align-items: center; gap: 10px;">
-                    @if($aberto)
+                    @if($jaApostou)
+                    <a href="{{ route('jogos.show', $jogo) }}" class="btn-ghost" style="height: 38px; font-size: 13px; text-decoration: none;">
+                        <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
+                        Ver palpite
+                    </a>
+                    @elseif($aberto && !$prazoFechado)
                     <a href="{{ route('jogos.show', $jogo) }}" class="btn-gold" style="height: 38px; font-size: 13px; text-decoration: none;">
                         <span class="material-symbols-outlined" style="font-size: 16px;">edit_note</span>
                         Apostar
@@ -65,6 +71,11 @@
                         <span class="material-symbols-outlined" style="font-size: 16px;">visibility</span>
                         Ver palpites
                     </a>
+                    @elseif($aberto && $prazoFechado)
+                    <span class="chip">
+                        <span class="material-symbols-outlined" style="font-size: 12px;">lock</span>
+                        Palpites fechados
+                    </span>
                     @else
                     <span class="chip">
                         <span class="material-symbols-outlined" style="font-size: 12px;">schedule</span>

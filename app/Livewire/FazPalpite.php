@@ -12,7 +12,7 @@ class FazPalpite extends Component
 {
     public Jogo $jogo;
 
-    public int $golsBrasil = 1;
+    public int $golsBrasil = 0;
     public int $golsAdversario = 0;
     public bool $mostrarModal = false;
     public bool $confirmado = false;

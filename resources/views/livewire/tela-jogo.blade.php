@@ -18,12 +18,8 @@
 
             {{-- Brasil --}}
             <div style="display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 0 0 auto;">
-                <svg width="100" height="70" viewBox="0 0 80 56" style="border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.45);">
-                    <rect width="80" height="56" fill="#009C3B"/>
-                    <path d="M40 6 L74 28 L40 50 L6 28 Z" fill="#FEDF00"/>
-                    <circle cx="40" cy="28" r="11" fill="#002776"/>
-                    <path d="M30 26 Q 40 22, 50 26" stroke="#fff" stroke-width="1.2" fill="none"/>
-                </svg>
+                <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                     style="width: 100px; height: 70px; border-radius: 8px; object-fit: contain; box-shadow: 0 8px 24px rgba(0,0,0,0.45);" />
                 <span style="font: 800 15px/1 Inter; letter-spacing: .06em; color: #fff; text-transform: uppercase;">Brasil</span>
             </div>
 

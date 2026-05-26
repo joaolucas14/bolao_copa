@@ -12,12 +12,15 @@ class Configuracoes extends Component
     public string $premioValor = '';
     public string $premioDescricao = '';
     public string $premioBonus = '';
+    public bool $bolaoEncerrado = false;
+    public bool $mostrarModalEncerrar = false;
 
     public function mount(): void
     {
         $this->premioValor     = Configuracao::obter('premio_valor', '0');
         $this->premioDescricao = Configuracao::obter('premio_descricao', 'A definir');
         $this->premioBonus     = Configuracao::obter('premio_bonus', '');
+        $this->bolaoEncerrado  = Configuracao::obter('bolao_encerrado', '0') === '1';
     }
 
     public function salvar(): void
@@ -33,6 +36,21 @@ class Configuracoes extends Component
         Configuracao::definir('premio_bonus', $this->premioBonus);
 
         $this->dispatch('toast', mensagem: 'Configurações salvas com sucesso!', tipo: 'sucesso');
+    }
+
+    public function encerrarBolao(): void
+    {
+        Configuracao::definir('bolao_encerrado', '1');
+        $this->bolaoEncerrado = true;
+        $this->mostrarModalEncerrar = false;
+        $this->dispatch('toast', mensagem: 'Bolão encerrado! Vencedor declarado no painel.', tipo: 'sucesso');
+    }
+
+    public function reabrirBolao(): void
+    {
+        Configuracao::definir('bolao_encerrado', '0');
+        $this->bolaoEncerrado = false;
+        $this->dispatch('toast', mensagem: 'Bolão reaberto.', tipo: 'sucesso');
     }
 
     #[Layout('layouts.app')]

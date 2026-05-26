@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Jogo;
+use App\Models\Palpite;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -14,6 +15,11 @@ class ListaJogos extends Component
     {
         $jogos = Jogo::orderBy('data_hora')->get();
 
-        return view('livewire.lista-jogos', compact('jogos'));
+        $jogosPalpitados = Palpite::where('user_id', auth()->id())
+            ->whereIn('jogo_id', $jogos->pluck('id'))
+            ->pluck('jogo_id')
+            ->flip();
+
+        return view('livewire.lista-jogos', compact('jogos', 'jogosPalpitados'));
     }
 }

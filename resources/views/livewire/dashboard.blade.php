@@ -1,15 +1,91 @@
 <div class="dash-grid" style="padding: 32px 32px 48px; max-width: 1440px; margin: 0 auto; display: grid; grid-template-columns: repeat(12, 1fr); gap: 22px;">
 
+    {{-- ===== BANNER VENCEDOR ===== --}}
+    @if($bolaoEncerrado && $vencedor)
+    @php $isMe = $vencedor->id === auth()->id(); @endphp
+    <div style="grid-column: 1 / -1; border-radius: var(--r-2xl); overflow: hidden; position: relative;
+        background: linear-gradient(135deg, #1A1206 0%, #2A1E00 40%, #1A1206 100%);
+        border: 1px solid rgba(242,201,76,0.50);
+        box-shadow: 0 0 60px rgba(242,201,76,0.15);">
+
+        {{-- Brilho de fundo --}}
+        <div style="position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 500px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(242,201,76,0.25) 0%, transparent 70%); filter: blur(30px); pointer-events: none;"></div>
+
+        <div style="position: relative; z-index: 2; display: flex; align-items: center; gap: 32px; padding: 28px 36px; flex-wrap: wrap;">
+
+            {{-- Troféu --}}
+            <div style="width: 72px; height: 72px; border-radius: var(--r-xl); background: var(--grad-gold-chip); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 12px 30px rgba(242,201,76,0.40), 0 1px 0 rgba(255,255,255,0.5) inset; flex-shrink: 0;">
+                <span class="material-symbols-outlined ms-fill" style="font-size: 40px; color: #5A3A00;">emoji_events</span>
+            </div>
+
+            {{-- Info vencedor --}}
+            <div style="flex: 1; min-width: 200px;">
+                <div style="font: 700 11px/1 Inter; letter-spacing: .18em; text-transform: uppercase; color: #FFD96B; margin-bottom: 8px;">
+                    🏆 Bolão Innovate Copa 2026 — Vencedor
+                </div>
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <div style="width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, #F2C94C 0%, #9A6300 100%); display: inline-flex; align-items: center; justify-content: center; font: 800 18px/1 Inter; color: #1A0F00; border: 2px solid rgba(242,201,76,0.60); flex-shrink: 0; box-shadow: 0 4px 12px rgba(242,201,76,0.30);">
+                        {{ strtoupper(substr($vencedor->nome, 0, 2)) }}
+                    </div>
+                    <div>
+                        <div style="font: 900 26px/1 Inter; letter-spacing: -0.02em; color: #FFE08A;">
+                            {{ $vencedor->nome }}
+                            @if($isMe)
+                            <span style="margin-left: 10px; padding: 3px 10px; border-radius: var(--r-pill); background: rgba(242,201,76,0.20); border: 1px solid rgba(242,201,76,0.50); font: 700 10px/1 Inter; letter-spacing: .12em; color: #FFD96B; vertical-align: middle;">VOCÊ</span>
+                            @endif
+                        </div>
+                        <div style="font: 500 13px/1 Inter; color: var(--fg-secondary); margin-top: 6px;">1º lugar no ranking final</div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Placar de pontos --}}
+            <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 16px 20px; border-radius: var(--r-lg); background: rgba(0,0,0,0.30); border: 1px solid rgba(242,201,76,0.20);">
+                    <div style="font: 900 36px/1 Inter; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; color: #FFE08A;">
+                        {{ number_format($vencedor->palpites_sum_pontuacao ?? 0, 1) }}
+                    </div>
+                    <div style="font: 600 10px/1 Inter; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-muted); margin-top: 6px;">pontos</div>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center;">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="chip green" style="font-size: 11px;">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">gps_fixed</span>
+                            {{ $vencedor->exatos ?? 0 }} exatos
+                        </span>
+                        <span class="chip yellow" style="font-size: 11px;">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">flag_circle</span>
+                            {{ $vencedor->ganhadores ?? 0 }} ganhadores
+                        </span>
+                    </div>
+                    <div>
+                        <span class="chip" style="font-size: 11px;">
+                            <span class="material-symbols-outlined" style="font-size: 12px;">percent</span>
+                            {{ $vencedor->parciais ?? 0 }} parciais
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endif
+
     {{-- Saudação --}}
     <div class="dash-greeting" style="grid-column: 1 / -1; display: flex; align-items: flex-end; justify-content: space-between;">
         <div>
             <div style="font: 600 11px/1 Inter; letter-spacing: .16em; text-transform: uppercase; color: var(--br-yellow); margin-bottom: 12px;">
                 <span class="material-symbols-outlined" style="font-size: 13px; vertical-align: -2px; margin-right: 6px;">waving_hand</span>
-                Bom dia, {{ explode(' ', auth()->user()->nome)[0] }}
+                Olá, {{ explode(' ', auth()->user()->nome)[0] }}
             </div>
             <h1 style="margin: 0; font: 800 34px/1.1 Inter; letter-spacing: -0.025em; color: #fff;">
                 @if($proximoJogo && $proximoJogo->data_hora)
-                    Faltam <span style="color: var(--br-yellow);">{{ $proximoJogo->data_hora->diffForHumans(['parts' => 1, 'short' => true]) }}</span> pro próximo jogo.
+                    @if($proximoJogo->data_hora->isPast())
+                        <span style="color: var(--br-yellow);">Jogo em andamento!</span>
+                    @elseif(now()->addHour()->greaterThanOrEqualTo($proximoJogo->data_hora))
+                        Palpites encerrados — <span style="color: var(--br-yellow);">jogo em breve!</span>
+                    @else
+                        Faltam <span style="color: var(--br-yellow);">{{ $proximoJogo->data_hora->diffForHumans(['parts' => 1, 'short' => true]) }}</span> pro próximo jogo.
+                    @endif
                 @else
                     Bem-vindo ao <span style="color: var(--br-yellow);">Bolão Innovate</span>!
                 @endif
@@ -51,7 +127,7 @@
             @if($proximoJogo->data_hora)
             <div style="font: 500 12.5px/1 Inter; color: var(--fg-muted);">
                 <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: -2px; margin-right: 6px; color: var(--fg-faint);">event</span>
-                {{ $proximoJogo->data_hora->format('d M Y · H:i') }} (Brasília)
+                {{ $proximoJogo->data_hora->translatedFormat('d M Y · H:i') }} (Brasília)
             </div>
             @endif
         </div>
@@ -59,12 +135,8 @@
         <div class="hero-matchup" style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; padding: 36px 40px 28px; position: relative; z-index: 2;">
             {{-- Brasil --}}
             <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
-                <svg width="108" height="76" viewBox="0 0 80 56" style="border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
-                    <rect width="80" height="56" fill="#009C3B" />
-                    <path d="M40 6 L 74 28 L 40 50 L 6 28 Z" fill="#FEDF00" />
-                    <circle cx="40" cy="28" r="11" fill="#002776" />
-                    <path d="M30 26 Q 40 22, 50 26" stroke="#fff" stroke-width="1.2" fill="none" />
-                </svg>
+                <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                     style="width: 108px; height: 76px; border-radius: 6px; object-fit: contain; box-shadow: 0 6px 18px rgba(0,0,0,0.35);" />
                 <div style="text-align: center;">
                     <div style="font: 800 38px/1 Inter; letter-spacing: -0.04em; color: #fff;">BRA</div>
                     <div style="font: 500 12.5px/1 Inter; color: var(--fg-muted); margin-top: 8px; letter-spacing: .08em;">BRASIL</div>
@@ -77,7 +149,7 @@
                 <livewire:countdown :jogoId="$proximoJogo->id" />
                 <div style="display: inline-flex; gap: 8px; align-items: center; font: 600 12px/1 Inter; color: var(--fg-secondary);">
                     <span class="material-symbols-outlined" style="font-size: 14px; color: var(--br-yellow);">event</span>
-                    {{ $proximoJogo->data_hora ? $proximoJogo->data_hora->format('d M Y · H:i') . ' BRT' : 'Data a definir' }}
+                    {{ $proximoJogo->data_hora ? $proximoJogo->data_hora->translatedFormat('d M Y · H:i') . ' BRT' : 'Data a definir' }}
                 </div>
             </div>
 
@@ -97,18 +169,29 @@
                 <div style="width: 36px; height: 36px; border-radius: var(--r-pill); border: 1px solid rgba(255,77,106,0.40); background: rgba(255,77,106,0.10); display: inline-flex; align-items: center; justify-content: center;">
                     <span class="material-symbols-outlined" style="font-size: 18px; color: #FF7A8E;">timer</span>
                 </div>
-                <div>
-                    <div style="font: 700 13px/1 Inter; color: #fff;">
-                        @if($proximoJogo->data_hora && $proximoJogo->data_hora->isFuture())
-                            Palpites se encerram em {{ $proximoJogo->data_hora->diffForHumans() }}
-                        @else
+                <div
+                    @if($proximoJogo->data_hora)
+                    x-data="bolaoDeadline({{ $proximoJogo->data_hora->timestamp * 1000 }})"
+                    x-init="init()"
+                    @endif
+                >
+                    <div style="font: 700 13px/1 Inter; color: #ffffff;"
+                        @if($proximoJogo->data_hora) x-text="texto" @endif
+                    >
+                        @if(!$proximoJogo->data_hora)
                             Palpites encerrados
                         @endif
                     </div>
-                    <div style="font: 500 12px/1 Inter; color: var(--fg-muted); margin-top: 5px;">Após o apito inicial, nenhum palpite pode ser alterado.</div>
+                    <div style="font: 500 12px/1 Inter; color: var(--fg-muted); margin-top: 5px;">1 hora antes do apito inicial, nenhum palpite poderá ser enviado.</div>
                 </div>
             </div>
-            @if($proximoJogo->status === 'aberto')
+            @if($meuPalpiteProximo)
+            <a href="{{ route('jogos.show', $proximoJogo) }}" class="btn-ghost" style="height: 52px; font-size: 14.5px; text-decoration: none;">
+                <span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
+                Ver meu palpite
+                <span class="material-symbols-outlined" style="font-size: 18px;">arrow_forward</span>
+            </a>
+            @elseif($proximoJogo->status === 'aberto' && $proximoJogo->data_hora && !now()->addHour()->greaterThanOrEqualTo($proximoJogo->data_hora))
             <a href="{{ route('jogos.show', $proximoJogo) }}" class="btn-gold" style="height: 52px; font-size: 14.5px; text-decoration: none;">
                 <span class="material-symbols-outlined" style="font-size: 18px;">edit_note</span>
                 Fazer meu palpite
@@ -245,11 +328,8 @@
         </div>
         <div style="padding: 24px 24px 18px; background: linear-gradient(180deg, rgba(0,156,59,0.08) 0%, transparent 100%); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px;">
             <div style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
-                <svg width="48" height="34" viewBox="0 0 80 56" style="border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
-                    <rect width="80" height="56" fill="#009C3B" />
-                    <path d="M40 6 L 74 28 L 40 50 L 6 28 Z" fill="#FEDF00" />
-                    <circle cx="40" cy="28" r="11" fill="#002776" />
-                </svg>
+                <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                     style="width: 48px; height: 34px; border-radius: 4px; object-fit: contain; box-shadow: 0 4px 12px rgba(0,0,0,0.3);" />
                 <div style="font: 700 13px/1 Inter; color: #fff;">Brasil</div>
             </div>
             <div style="display: flex; align-items: center; gap: 8px; font: 900 44px/1 Inter; letter-spacing: -0.04em; color: #fff; font-variant-numeric: tabular-nums;">

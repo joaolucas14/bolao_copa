@@ -10,11 +10,8 @@
         <p style="font: 500 14px/1.5 Inter; color: var(--fg-muted); margin: 0 0 24px;">Seu palpite foi registrado e não pode ser alterado.</p>
         <div style="display: inline-flex; align-items: center; gap: 24px; padding: 20px 40px; background: rgba(0,0,0,0.30); border: 1px solid var(--border-medium); border-radius: var(--r-xl);">
             <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
-                <svg width="56" height="40" viewBox="0 0 80 56" style="border-radius: 4px;">
-                    <rect width="80" height="56" fill="#009C3B"/>
-                    <path d="M40 6 L74 28 L40 50 L6 28 Z" fill="#FEDF00"/>
-                    <circle cx="40" cy="28" r="11" fill="#002776"/>
-                </svg>
+                <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                     style="width: 56px; height: 40px; border-radius: 4px; object-fit: contain;" />
                 <span style="font: 700 13px/1 Inter; color: #fff;">Brasil</span>
             </div>
             <div style="font: 900 52px/1 Inter; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--br-yellow);">
@@ -86,12 +83,8 @@
             {{-- Brasil --}}
             <div style="display: flex; flex-direction: column; align-items: center; gap: 24px;">
                 <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
-                    <svg width="88" height="62" viewBox="0 0 80 56" style="border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.35);">
-                        <rect width="80" height="56" fill="#009C3B"/>
-                        <path d="M40 6 L74 28 L40 50 L6 28 Z" fill="#FEDF00"/>
-                        <circle cx="40" cy="28" r="11" fill="#002776"/>
-                        <path d="M30 26 Q 40 22, 50 26" stroke="#fff" stroke-width="1.2" fill="none"/>
-                    </svg>
+                    <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                         style="width: 88px; height: 62px; border-radius: 6px; object-fit: contain; box-shadow: 0 6px 18px rgba(0,0,0,0.35);" />
                     <div style="text-align: center;">
                         <div style="font: 900 32px/1 Inter; letter-spacing: -0.04em; color: #fff;">BRA</div>
                         <div style="font: 500 11px/1 Inter; color: var(--fg-muted); margin-top: 6px; letter-spacing: .10em;">BRASIL</div>
@@ -230,11 +223,8 @@
                     <div style="font: 600 10.5px/1 Inter; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-muted); margin-bottom: 12px;">Resumo do palpite</div>
                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <svg width="36" height="26" viewBox="0 0 80 56" style="border-radius: 3px;">
-                                <rect width="80" height="56" fill="#009C3B"/>
-                                <path d="M40 6 L74 28 L40 50 L6 28 Z" fill="#FEDF00"/>
-                                <circle cx="40" cy="28" r="11" fill="#002776"/>
-                            </svg>
+                            <img src="{{ asset('images/bandeira-brasil.png') }}" alt="Brasil"
+                                 style="width: 36px; height: 26px; border-radius: 3px; object-fit: contain;" />
                             <span style="font: 700 14px/1 Inter; color: #fff;">Brasil</span>
                         </div>
                         <div style="font: 900 32px/1 Inter; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; color: var(--br-yellow);">
@@ -242,9 +232,8 @@
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <span style="font: 700 14px/1 Inter; color: #fff;">{{ $jogo->adversario }}</span>
-                            <div style="width: 36px; height: 26px; border-radius: 3px; background: var(--bg-elev-1); border: 1px solid var(--border-soft); display: flex; align-items: center; justify-content: center;">
-                                <span class="material-symbols-outlined" style="font-size: 16px; color: var(--fg-muted);">flag</span>
-                            </div>
+                            <img src="{{ $jogo->foto_url }}" alt="{{ $jogo->adversario }}"
+                                 style="width: 36px; height: 26px; border-radius: 3px; object-fit: contain; background: var(--bg-elev-1); border: 1px solid var(--border-soft);" />
                         </div>
                     </div>
                 </div>

@@ -82,12 +82,12 @@ class Jogo extends Model
         return $this->status === 'encerrado';
     }
 
-    public function palpitesEncerrados(): bool
+    public function palpitesBloqueados(): bool
     {
         if ($this->status !== 'aberto') {
             return true;
         }
 
-        return $this->data_hora && $this->data_hora->isPast();
+        return $this->data_hora && now()->addHour()->greaterThanOrEqualTo($this->data_hora);
     }
 }
