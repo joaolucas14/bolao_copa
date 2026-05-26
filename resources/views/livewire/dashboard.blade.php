@@ -84,7 +84,7 @@
                     @elseif(now()->addHour()->greaterThanOrEqualTo($proximoJogo->data_hora))
                         Palpites encerrados — <span style="color: var(--br-yellow);">jogo em breve!</span>
                     @else
-                        Faltam <span style="color: var(--br-yellow);">{{ $proximoJogo->data_hora->diffForHumans(['parts' => 1, 'short' => true]) }}</span> pro próximo jogo.
+                        Faltam <span style="color: var(--br-yellow);">{{ $proximoJogo->data_hora->diffForHumans(['parts' => 1, 'short' => true, 'syntax' => \Carbon\CarbonInterface::DIFF_ABSOLUTE]) }}</span> pro próximo jogo.
                     @endif
                 @else
                     Bem-vindo ao <span style="color: var(--br-yellow);">Bolão Innovate</span>!
